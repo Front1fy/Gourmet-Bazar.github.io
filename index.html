@@ -43,10 +43,9 @@ body{
 .logo img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* şəkil div-ə uyğun kəsiləcək */
-    border-radius: 25px; /* radius istəmirsinizsə 0 edə bilərsiniz */
+    object-fit: cover;
+    border-radius: 25px;
 }
-
 
 /* HEADER */
 .header{
@@ -307,13 +306,20 @@ td:last-child{text-align:right;color:#aaa}
 </div>
 
 <script>
+// Əsas kateqoriyalar
 const categories=[
-"Hamısı","Trend","Səbətlər","Quru meyvə","Dondurulmuş","Ədviyyat","Çərəzlər",
-"Şirələr","Bal & Mürəbbə","Çay","Kofe","Süd məhsulları","Ət məhsulları",
+"Hamısı","Trend","Səbətlər","Təbii Şirələr","Dondurulmuş","Ədviyyat","Çərəzlər",
+"Bal & Mürəbbə","Çay","Kofe","Süd məhsulları","Ət məhsulları",
 "Balıq","Şirniyyat","Sağlam qida","Bio məhsullar","Uşaq üçün","Diet",
 "Fast food","Soslar","Konservlər","Makaron","Taxıllar","Yağlar","Digər"
 ];
 
+// Təbii Şirələr alt kateqoriyalar
+const subCategories={
+  "Təbii Şirələr":["Hamısı","Meyvə şirələri","Tərəvəz şirələri","Mix şirələri","Detoks","Enerji şirələri","Uşaq şirələri"]
+};
+
+// Məhsullar
 const data={
 "Trend":[
  {name:"SUBLİMİNASİYA - DONDURMA QURUSU QARIŞIQ (50qr)", price:"AZN 7.65", weight:"50 q", img:"ımg/Trend1.avif"},
@@ -330,9 +336,28 @@ const data={
  {name:"Meyvə səbəti", price:"AZN 134.10", weight:"-", img:"ımg/Səbətlər4.avif"},
  {name:"Övlad payı", price:"AZN 242.91", weight:"-", img:"ımg/Səbətlər5.avif"}
 ],
-"Quru meyvə":[
- {name:"Qurudulmuş Meyvə Qarışıq",price:"AZN 9.90",weight:"100 q",img:"https://images.unsplash.com/photo-1615485925600-97237c4fc1ec"}
-]
+"Təbii Şirələr":{
+  "Meyvə şirələri":[
+    {name:"Alma şirəsi 250ml", price:"AZN 3.50", weight:"250 ml", img:"ımg/sire1.avif"},
+    {name:"Portağal şirəsi 250ml", price:"AZN 4.00", weight:"250 ml", img:"ımg/sire2.avif"}
+  ],
+  "Tərəvəz şirələri":[
+    {name:"Yerkökü şirəsi 250ml", price:"AZN 3.80", weight:"250 ml", img:"ımg/sire3.avif"},
+    {name:"Kərəviz şirəsi 250ml", price:"AZN 4.20", weight:"250 ml", img:"ımg/sire4.avif"}
+  ],
+  "Mix şirələri":[
+    {name:"Alma & Yerkökü mix 250ml", price:"AZN 4.50", weight:"250 ml", img:"ımg/sire5.avif"}
+  ],
+  "Detoks":[
+    {name:"Detoks şirəsi 300ml", price:"AZN 5.00", weight:"300 ml", img:"ımg/sire6.avif"}
+  ],
+  "Enerji şirələri":[
+    {name:"Enerji mix 250ml", price:"AZN 5.50", weight:"250 ml", img:"ımg/sire7.avif"}
+  ],
+  "Uşaq şirələri":[
+    {name:"Uşaq alma şirəsi 200ml", price:"AZN 2.50", weight:"200 ml", img:"ımg/sire8.avif"}
+  ]
+}
 };
 
 const catBox=document.getElementById("catButtons");
@@ -386,17 +411,13 @@ function updateCartPopup(){
 // SEBET DÜYMƏSİNƏ BASMA
 const cartBtn = document.getElementById('cartBtn');
 const cartPopup = document.getElementById('cartPopup');
-cartBtn.addEventListener('click',()=>{
-    cartPopup.style.display = cartPopup.style.display==='block'?'none':'block';
-});
+cartBtn.addEventListener('click',()=>{cartPopup.style.display = cartPopup.style.display==='block'?'none':'block';});
 
 // WHATSAPP DÜYMƏSİ
 document.getElementById('whatsappBtn').addEventListener('click',()=>{
     if(cart.length===0) return alert("Səbət boşdur!");
     let msg = "Sizin sifarişiniz:%0A";
-    cart.forEach(p=>{
-        msg += `${p.name} x${p.qty} - ${p.price}%0A`;
-    });
+    cart.forEach(p=>{ msg += `${p.name} x${p.qty} - ${p.price}%0A`; });
     const total = cart.reduce((sum,p)=>sum + parseFloat(p.price.replace('AZN ','')) * p.qty, 0);
     msg += `Ümumi: ${total.toFixed(2)}₼`;
     window.open(`https://wa.me/994704050802?text=${msg}`,'_blank');
@@ -416,11 +437,32 @@ function productCard(p){
   </div>`;
 }
 
-// RENDER
+// RENDER FUNKSİYALARI
 function render(cat){
   content.innerHTML="";
+  // Təbii Şirələr alt kateqoriya düymələri
+  if(cat==="Təbii Şirələr"){
+    let subCatBox = document.createElement("div");
+    subCatBox.className="categories";
+    subCategories["Təbii Şirələr"].forEach((sc,i)=>{
+      const b = document.createElement("button");
+      b.textContent = sc;
+      if(i===0) b.classList.add("active");
+      b.onclick = ()=>{
+        subCatBox.querySelectorAll("button").forEach(x=>x.classList.remove("active"));
+        b.classList.add("active");
+        renderSubCategory(sc);
+      };
+      subCatBox.appendChild(b);
+    });
+    content.appendChild(subCatBox);
+    renderSubCategory("Hamısı");
+    return;
+  }
+
   if(cat==="Hamısı"){
     for(const c in data){
+      if(c==="Təbii Şirələr") continue;
       content.innerHTML+=`
       <div class="category-section">
         <div class="category-title">${c}</div>
@@ -431,33 +473,43 @@ function render(cat){
     }
   }else{
     if(!data[cat]) return;
-    content.innerHTML=`
-    <div class="category-section">
-      <div class="products">
-        ${data[cat].map(productCard).join("")}
-      </div>
-    </div>`;
+    content.innerHTML=`<div class="category-section"><div class="products">${data[cat].map(productCard).join("")}</div></div>`;
   }
 }
-render("Hamısı");
+
+function renderSubCategory(subCat){
+  const productsDiv = document.createElement("div");
+  productsDiv.className="category-section";
+  productsDiv.innerHTML=`<div class="category-title">${subCat}</div>
+  <div class="products">
+    ${(subCat==="Hamısı"? Object.values(data["Təbii Şirələr"]).flat() : data["Təbii Şirələr"][subCat]).map(productCard).join("")}
+  </div>`;
+  const old = content.querySelector(".category-section:not(:first-child)");
+  if(old) old.remove();
+  content.appendChild(productsDiv);
+}
 
 // SEARCH
 document.getElementById("search").addEventListener("input",e=>{
   const v=e.target.value.toLowerCase();
   content.innerHTML="";
   for(const c in data){
-    const f=data[c].filter(p=>p.name.toLowerCase().includes(v));
-    if(f.length){
+    const f=c==="Təbii Şirələr"? Object.values(data[c]).flat() : data[c];
+    const filtered = f.filter(p=>p.name.toLowerCase().includes(v));
+    if(filtered.length){
       content.innerHTML+=`
       <div class="category-section">
         <div class="category-title">${c}</div>
         <div class="products">
-          ${f.map(productCard).join("")}
+          ${filtered.map(productCard).join("")}
         </div>
       </div>`;
     }
   }
 });
+
+// Başlanğıc render
+render("Hamısı");
 </script>
 
 </body>
