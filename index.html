@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gourmet Bazar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#000;
+    color:#fff;
+}
+
+/* SEARCH */
+.search-bar{
+    padding:12px;
+    position:sticky;
+    top:0;
+    background:#000;
+    z-index:100;
+}
+.search-bar input{
+    width:100%;
+    padding:12px;
+    border-radius:25px;
+    border:none;
+    background:#111;
+    color:white;
+    font-size:14px;
+}
+
+/* MENU ICON */
+.menu-icon{
+    font-size:22px;
+    padding:10px 15px;
+}
+
+/* LOGO */
+.logo-box{
+    width:110px;
+    height:110px;
+    background:#111;
+    margin:10px auto;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* TITLE */
+.title{
+    text-align:center;
+    font-weight:300;
+    font-size:22px;
+}
+
+.line{
+    height:1px;
+    background:#333;
+    width:80%;
+    margin:10px auto;
+}
+
+.info{
+    text-align:center;
+    font-size:13px;
+    color:#aaa;
+}
+.info a{
+    color:white;
+    text-decoration:none;
+    display:block;
+    margin-top:5px;
+}
+
+/* CATEGORIES */
+.categories{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:15px;
+}
+.categories button{
+    background:#111;
+    border:none;
+    padding:8px 16px;
+    border-radius:20px;
+    color:white;
+    cursor:pointer;
+    white-space:nowrap;
+}
+.categories button.active{
+    background:white;
+    color:black;
+}
+
+/* MENU GRID */
+.menu{
+    padding:15px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* ITEM CARD */
+.item{
+    background:#111;
+    border-radius:15px;
+    padding:10px;
+}
+
+.item img{
+    width:100%;
+    height:130px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.item h3{
+    margin:8px 0 4px;
+    font-size:14px;
+}
+
+.price{
+    font-weight:600;
+    font-size:13px;
+}
+
+/* RESPONSIVE */
+@media(min-width:600px){
+    .menu{
+        max-width:600px;
+        margin:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="search-bar">
+    <input type="text" placeholder="Axtar..." id="searchInput">
+</div>
+
+<div class="menu-icon">☰</div>
+
+<div class="logo-box">LOGO</div>
+
+<div class="title">Gourmet Bazar</div>
+
+<div class="line"></div>
+
+<div class="info">
+    Açıq saatlar: 09:00 - 22:00
+    <a href="https://www.google.com/maps" target="_blank">Bakı, Azərbaycan</a>
+</div>
+
+<div class="categories" id="categories"></div>
+
+<div class="menu" id="menu"></div>
+
+<script>
+const data=[
+{category:"Meyvə",name:"Avokado",price:"3.20 ₼",img:"https://images.unsplash.com/photo-1604908176997-4317f4b21e8e"},
+{category:"Meyvə",name:"Mango",price:"5.90 ₼",img:"https://images.unsplash.com/photo-1553279768-865429fa0078"},
+{category:"Salat",name:"Sezar Salat",price:"9.50 ₼",img:"https://images.unsplash.com/photo-1550304943-4f24f54ddde9"},
+{category:"Salat",name:"Yunan Salatı",price:"8.00 ₼",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c"},
+{category:"İçkilər",name:"Fresh Portağal",price:"4.50 ₼",img:"https://images.unsplash.com/photo-1572441710534-680cbb8c53a5"},
+{category:"İçkilər",name:"Kola",price:"2.00 ₼",img:"https://images.unsplash.com/photo-1580910051074-3eb694886505"}
+];
+
+const categories=[...new Set(data.map(i=>i.category))];
+const catDiv=document.getElementById("categories");
+const menuDiv=document.getElementById("menu");
+
+categories.forEach((cat,i)=>{
+    const btn=document.createElement("button");
+    btn.textContent=cat;
+    if(i===0) btn.classList.add("active");
+    btn.onclick=()=>{
+        document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        render(cat);
+    }
+    catDiv.appendChild(btn);
+});
+
+function render(category){
+    menuDiv.innerHTML="";
+    data.filter(item=>item.category===category)
+    .forEach(item=>{
+        menuDiv.innerHTML+=`
+        <div class="item">
+            <img src="${item.img}">
+            <h3>${item.name}</h3>
+            <div class="price">${item.price}</div>
+        </div>
+        `;
+    });
+}
+
+render(categories[0]);
+
+/* SEARCH */
+document.getElementById("searchInput").addEventListener("keyup",function(){
+    const value=this.value.toLowerCase();
+    menuDiv.innerHTML="";
+    data.filter(item=>item.name.toLowerCase().includes(value))
+    .forEach(item=>{
+        menuDiv.innerHTML+=`
+        <div class="item">
+            <img src="${item.img}">
+            <h3>${item.name}</h3>
+            <div class="price">${item.price}</div>
+        </div>
+        `;
+    });
+});
+</script>
+
+</body>
+</html>
