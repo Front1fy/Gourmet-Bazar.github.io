@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gourmet Bazar</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
 body{
     margin:0;
     font-family:'Poppins',sans-serif;
@@ -15,210 +16,429 @@ body{
     color:#fff;
 }
 
-/* SEARCH */
-.search-bar{
-    padding:12px;
-    position:sticky;
-    top:0;
-    background:#000;
-    z-index:100;
-}
-.search-bar input{
-    width:100%;
-    padding:12px;
-    border-radius:25px;
-    border:none;
-    background:#111;
-    color:white;
-    font-size:14px;
-}
-
-/* MENU ICON */
-.menu-icon{
-    font-size:22px;
-    padding:10px 15px;
+/* BANNER */
+.banner{
+    height:220px;
+    background:url('https://images.unsplash.com/photo-1542838132-92c53300491e') center/cover no-repeat;
+    border-bottom-left-radius:35px;
+    border-bottom-right-radius:35px;
+    position:relative;
 }
 
 /* LOGO */
-.logo-box{
-    width:110px;
-    height:110px;
+.logo{
+    width:120px;
+    height:120px;
     background:#111;
-    margin:10px auto;
-    border-radius:20px;
+    border-radius:25px;
+    position:absolute;
+    left:50%;
+    bottom:-60px;
+    transform:translateX(-50%);
     display:flex;
     align-items:center;
     justify-content:center;
+    font-weight:700;
 }
 
-/* TITLE */
-.title{
+/* HEADER */
+.header{
+    margin-top:70px;
     text-align:center;
-    font-weight:300;
-    font-size:22px;
+    padding:0 15px;
 }
-
-.line{
-    height:1px;
-    background:#333;
-    width:80%;
-    margin:10px auto;
+.header h1{
+    margin:10px 0 6px;
+    font-size:26px;
 }
-
-.info{
-    text-align:center;
+.header .meta{
     font-size:13px;
     color:#aaa;
 }
-.info a{
-    color:white;
-    text-decoration:none;
+.header a{
     display:block;
-    margin-top:5px;
+    margin-top:6px;
+    color:#4da3ff;
+    text-decoration:none;
+    font-size:13px;
+}
+
+/* SEARCH */
+.search{
+    padding:15px;
+    position:sticky;
+    top:0;
+    background:#000;
+    z-index:10;
+}
+.search input{
+    width:100%;
+    padding:14px 18px;
+    border-radius:30px;
+    border:none;
+    outline:none;
+    background:#111;
+    color:#fff;
 }
 
 /* CATEGORIES */
 .categories{
     display:flex;
-    overflow-x:auto;
     gap:10px;
-    padding:15px;
+    overflow-x:auto;
+    padding:12px 15px;
 }
 .categories button{
     background:#111;
+    color:#fff;
     border:none;
     padding:8px 16px;
     border-radius:20px;
-    color:white;
-    cursor:pointer;
     white-space:nowrap;
+    font-size:13px;
 }
 .categories button.active{
-    background:white;
-    color:black;
+    background:#fff;
+    color:#000;
+    font-weight:600;
 }
 
-/* MENU GRID */
-.menu{
-    padding:15px;
+/* CATEGORY FLOW */
+.category-section{
+    padding:10px 15px;
+}
+.category-title{
+    font-size:18px;
+    margin:20px 0 10px;
+}
+
+/* PRODUCTS */
+.products{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:12px;
 }
-
-/* ITEM CARD */
-.item{
+.card{
     background:#111;
-    border-radius:15px;
-    padding:10px;
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
 }
-
-.item img{
+.card img{
     width:100%;
     height:130px;
     object-fit:cover;
-    border-radius:12px;
 }
-
-.item h3{
-    margin:8px 0 4px;
-    font-size:14px;
+.add{
+    position:absolute;
+    top:8px;
+    right:8px;
+    width:30px;
+    height:30px;
+    background:#1e2a33;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    cursor:pointer;
 }
-
+.card-body{
+    padding:10px;
+}
 .price{
+    color:#4da3ff;
+    font-size:14px;
     font-weight:600;
+}
+.name{
     font-size:13px;
 }
+.weight{
+    font-size:12px;
+    color:#888;
+}
 
-/* RESPONSIVE */
-@media(min-width:600px){
-    .menu{
-        max-width:600px;
-        margin:auto;
-    }
+/* INFO BOX */
+.info-box{
+    background:#0c0c0c;
+    margin:30px 15px 40px;
+    padding:18px;
+    border-radius:20px;
+    font-size:13px;
+}
+.info-box h3{margin-top:0}
+.info-box h4{margin:18px 0 6px}
+.info-box a{
+    color:#4da3ff;
+    text-decoration:none;
+}
+table{width:100%}
+td:last-child{text-align:right;color:#aaa}
+
+/* SEBET DÜYMƏSİ - aşağı sağ */
+.cart-btn{
+    position:fixed;
+    bottom:15px;
+    right:15px;
+    background:#4da3ff;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    z-index:20;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    cursor:pointer;
+}
+.cart-btn:hover{
+    background:#337acc;
+}
+
+/* SEBET POPUP */
+.cart-popup{
+    position:fixed;
+    bottom:70px;
+    right:15px;
+    width:280px;
+    max-height:400px;
+    background:#111;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.4);
+    overflow-y:auto;
+    display:none;
+    z-index:25;
+}
+.cart-popup h4{
+    margin-top:0;
+    margin-bottom:10px;
+    font-size:16px;
+    color:#4da3ff;
+}
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:13px;
+}
+.cart-total{
+    font-weight:600;
+    margin-top:10px;
+    text-align:right;
+}
+.whatsapp-btn{
+    display:block;
+    text-align:center;
+    margin-top:12px;
+    background:#25D366;
+    color:#fff;
+    padding:10px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+}
+.whatsapp-btn:hover{
+    background:#1ebe57;
 }
 </style>
 </head>
 
 <body>
 
-<div class="search-bar">
-    <input type="text" placeholder="Axtar..." id="searchInput">
+<div class="banner">
+    <div class="logo">LOGO</div>
 </div>
 
-<div class="menu-icon">☰</div>
-
-<div class="logo-box">LOGO</div>
-
-<div class="title">Gourmet Bazar</div>
-
-<div class="line"></div>
-
-<div class="info">
-    Açıq saatlar: 09:00 - 22:00
-    <a href="https://www.google.com/maps" target="_blank">Bakı, Azərbaycan</a>
+<div class="header">
+    <h1>Gourmet Bazar</h1>
+    <div class="meta">😊 9.0 • Bütün gün açıqdır • Min. sifariş ₼20.00</div>
+    <a href="#">Məkan məlumatları</a>
 </div>
 
-<div class="categories" id="categories"></div>
+<div class="search">
+    <input type="text" placeholder="Gourmet Bazar məkanında axtarın..." id="search">
+</div>
 
-<div class="menu" id="menu"></div>
+<div class="categories" id="catButtons"></div>
+<div id="content"></div>
+
+<!-- INFO -->
+<div class="info-box">
+    <h3>Gündəlik yox, Xüsusi Seçim!</h3>
+    <h4>Ünvan</h4>
+    <p>Baku city, Khatai Avenue<br>AZ1000 Bakı</p>
+    <a target="_blank" href="https://www.google.com/maps?q=40.38508807,49.8524386">Xəritəyə bax</a>
+
+    <h4>Çatdırılma saatları</h4>
+    <table>
+        <tr><td>Bazar ertəsi</td><td>Bütün gün</td></tr>
+        <tr><td>Çərşənbə axşamı</td><td>Bütün gün</td></tr>
+        <tr><td>Çərşənbə</td><td>Bütün gün</td></tr>
+        <tr><td>Cümə axşamı</td><td>Bütün gün</td></tr>
+        <tr><td>Cümə</td><td>Bütün gün</td></tr>
+        <tr><td>Şənbə</td><td>Bütün gün</td></tr>
+        <tr><td>Bazar</td><td>Bütün gün</td></tr>
+    </table>
+
+    <h4>Ətraflı məlumat</h4>
+    <a href="tel:+994704050802">+994 70 405 08 02</a><br>
+    <a target="_blank" href="https://www.instagram.com/yashil_bazar_wolt?igsh=MWw5NTNybTAycGxmbQ%3D%3D">Instagram səhifəmizə keçin</a>
+</div>
+
+<!-- SEBET DÜYMƏSİ -->
+<div class="cart-btn" id="cartBtn">🛒 Səbət (0₼)</div>
+
+<!-- SEBET POPUP -->
+<div class="cart-popup" id="cartPopup">
+    <h4>Sizin Səbət</h4>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal"></div>
+    <a href="#" target="_blank" class="whatsapp-btn" id="whatsappBtn">WhatsApp-a keç</a>
+</div>
 
 <script>
-const data=[
-{category:"Meyvə",name:"Avokado",price:"3.20 ₼",img:"https://images.unsplash.com/photo-1604908176997-4317f4b21e8e"},
-{category:"Meyvə",name:"Mango",price:"5.90 ₼",img:"https://images.unsplash.com/photo-1553279768-865429fa0078"},
-{category:"Salat",name:"Sezar Salat",price:"9.50 ₼",img:"https://images.unsplash.com/photo-1550304943-4f24f54ddde9"},
-{category:"Salat",name:"Yunan Salatı",price:"8.00 ₼",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c"},
-{category:"İçkilər",name:"Fresh Portağal",price:"4.50 ₼",img:"https://images.unsplash.com/photo-1572441710534-680cbb8c53a5"},
-{category:"İçkilər",name:"Kola",price:"2.00 ₼",img:"https://images.unsplash.com/photo-1580910051074-3eb694886505"}
+const categories=[
+"Hamısı","Meyvə","Tərəvəz","Quru meyvə","Dondurulmuş","Ədviyyat","Çərəzlər",
+"Şirələr","Bal & Mürəbbə","Çay","Kofe","Süd məhsulları","Ət məhsulları",
+"Balıq","Şirniyyat","Sağlam qida","Bio məhsullar","Uşaq üçün","Diet",
+"Fast food","Soslar","Konservlər","Makaron","Taxıllar","Yağlar","Digər"
 ];
 
-const categories=[...new Set(data.map(i=>i.category))];
-const catDiv=document.getElementById("categories");
-const menuDiv=document.getElementById("menu");
+const data={
+"Meyvə":[
+ {name:"Çəkala",price:"AZN 70.00",weight:"100 q",img:"https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2"}
+],
+"Tərəvəz":[
+ {name:"Kartof Gədəbəy",price:"AZN 4.90",weight:"1 kq",img:"https://images.unsplash.com/photo-1582515073490-39981397c445"}
+],
+"Quru meyvə":[
+ {name:"Qurudulmuş Meyvə Qarışıq",price:"AZN 9.90",weight:"100 q",img:"https://images.unsplash.com/photo-1615485925600-97237c4fc1ec"}
+]
+};
 
-categories.forEach((cat,i)=>{
-    const btn=document.createElement("button");
-    btn.textContent=cat;
-    if(i===0) btn.classList.add("active");
-    btn.onclick=()=>{
-        document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        render(cat);
-    }
-    catDiv.appendChild(btn);
+const catBox=document.getElementById("catButtons");
+const content=document.getElementById("content");
+const cart=[];
+
+// KATEGORİYA DÜYMƏLƏRİ
+categories.forEach((c,i)=>{
+  const b=document.createElement("button");
+  b.textContent=c;
+  if(i===0) b.classList.add("active");
+  b.onclick=()=>{
+    document.querySelectorAll(".categories button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    render(c);
+  };
+  catBox.appendChild(b);
 });
 
-function render(category){
-    menuDiv.innerHTML="";
-    data.filter(item=>item.category===category)
-    .forEach(item=>{
-        menuDiv.innerHTML+=`
-        <div class="item">
-            <img src="${item.img}">
-            <h3>${item.name}</h3>
-            <div class="price">${item.price}</div>
-        </div>
-        `;
-    });
+// SEBET FUNKSİYALARI
+function addToCart(product){
+    const existing = cart.find(p => p.name === product.name);
+    if(existing){
+        existing.qty += 1;
+    }else{
+        cart.push({...product, qty:1});
+    }
+    updateCartBtn();
 }
 
-render(categories[0]);
+function updateCartBtn(){
+    const total = cart.reduce((sum,p)=>sum + parseFloat(p.price.replace('AZN ','')) * p.qty, 0);
+    document.getElementById('cartBtn').textContent = `🛒 Səbət (${total.toFixed(2)}₼)`;
+    updateCartPopup();
+}
 
-/* SEARCH */
-document.getElementById("searchInput").addEventListener("keyup",function(){
-    const value=this.value.toLowerCase();
-    menuDiv.innerHTML="";
-    data.filter(item=>item.name.toLowerCase().includes(value))
-    .forEach(item=>{
-        menuDiv.innerHTML+=`
-        <div class="item">
-            <img src="${item.img}">
-            <h3>${item.name}</h3>
-            <div class="price">${item.price}</div>
-        </div>
-        `;
+function updateCartPopup(){
+    const cartItemsDiv = document.getElementById('cartItems');
+    const cartTotalDiv = document.getElementById('cartTotal');
+    cartItemsDiv.innerHTML = '';
+    cart.forEach(p=>{
+        const div = document.createElement('div');
+        div.className='cart-item';
+        div.textContent = `${p.name} x${p.qty} - ${p.price}`;
+        cartItemsDiv.appendChild(div);
     });
+    const total = cart.reduce((sum,p)=>sum + parseFloat(p.price.replace('AZN ','')) * p.qty, 0);
+    cartTotalDiv.textContent = `Ümumi: ${total.toFixed(2)}₼`;
+}
+
+// SEBET DÜYMƏSİNƏ BASMA
+const cartBtn = document.getElementById('cartBtn');
+const cartPopup = document.getElementById('cartPopup');
+cartBtn.addEventListener('click',()=>{
+    cartPopup.style.display = cartPopup.style.display==='block'?'none':'block';
+});
+
+// WHATSAPP DÜYMƏSİ
+document.getElementById('whatsappBtn').addEventListener('click',()=>{
+    if(cart.length===0) return alert("Səbət boşdur!");
+    let msg = "Sizin sifarişiniz:%0A";
+    cart.forEach(p=>{
+        msg += `${p.name} x${p.qty} - ${p.price}%0A`;
+    });
+    const total = cart.reduce((sum,p)=>sum + parseFloat(p.price.replace('AZN ','')) * p.qty, 0);
+    msg += `Ümumi: ${total.toFixed(2)}₼`;
+    window.open(`https://wa.me/994704050802?text=${msg}`,'_blank');
+});
+
+// MEHSUL KARTLARI
+function productCard(p){
+  return `
+  <div class="card">
+    <img src="${p.img}">
+    <div class="add" onclick='addToCart(${JSON.stringify(p)})'>+</div>
+    <div class="card-body">
+      <div class="price">${p.price}</div>
+      <div class="name">${p.name}</div>
+      <div class="weight">${p.weight}</div>
+    </div>
+  </div>`;
+}
+
+// RENDER
+function render(cat){
+  content.innerHTML="";
+  if(cat==="Hamısı"){
+    for(const c in data){
+      content.innerHTML+=`
+      <div class="category-section">
+        <div class="category-title">${c}</div>
+        <div class="products">
+          ${data[c].map(productCard).join("")}
+        </div>
+      </div>`;
+    }
+  }else{
+    if(!data[cat]) return;
+    content.innerHTML=`
+    <div class="category-section">
+      <div class="products">
+        ${data[cat].map(productCard).join("")}
+      </div>
+    </div>`;
+  }
+}
+render("Hamısı");
+
+// SEARCH
+document.getElementById("search").addEventListener("input",e=>{
+  const v=e.target.value.toLowerCase();
+  content.innerHTML="";
+  for(const c in data){
+    const f=data[c].filter(p=>p.name.toLowerCase().includes(v));
+    if(f.length){
+      content.innerHTML+=`
+      <div class="category-section">
+        <div class="category-title">${c}</div>
+        <div class="products">
+          ${f.map(productCard).join("")}
+        </div>
+      </div>`;
+    }
+  }
 });
 </script>
 
