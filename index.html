@@ -428,23 +428,7 @@ const data={
     {name:"Yemişan şirəsi (500ml)", price:"AZN 4.50", weight:"500 ml", img:"ımg/sire68.jfif"},
     {name:"Alma şirəsi (500ml)", price:"AZN 4.50", weight:"500 ml", img:"ımg/sire69.jfif"},
     {name:"Xudat duşes (500ml)", price:"AZN 3.15", weight:"500 ml", img:"ımg/sire70.jfif"}
- ],
-
-
-
-
-  "Mix şirələri":[
-    {name:"Alma & Yerkökü mix 250ml", price:"AZN 4.50", weight:"250 ml", img:"ımg/sire5.avif"}
-  ],
-  "Detoks":[
-    {name:"Detoks şirəsi 300ml", price:"AZN 5.00", weight:"300 ml", img:"ımg/sire6.avif"}
-  ],
-  "Enerji şirələri":[
-    {name:"Enerji mix 250ml", price:"AZN 5.50", weight:"250 ml", img:"ımg/sire7.avif"}
-  ],
-  "Uşaq şirələri":[
-    {name:"Uşaq alma şirəsi 200ml", price:"AZN 2.50", weight:"200 ml", img:"ımg/sire8.avif"}
-  ]
+ ]
 }
 };
 
@@ -528,8 +512,9 @@ function productCard(p){
 // RENDER FUNKSİYALARI
 function render(cat){
   content.innerHTML="";
-  // Təbii Şirələr alt kateqoriya düymələri
+
   if(cat==="Təbii Şirələr"){
+    // Təbii Şirələr alt kateqoriya düymələri
     let subCatBox = document.createElement("div");
     subCatBox.className="categories";
     subCategories["Təbii Şirələr"].forEach((sc,i)=>{
@@ -548,18 +533,32 @@ function render(cat){
     return;
   }
 
-  if(cat==="Hamısı"){
+if(cat==="Hamısı"){
     for(const c in data){
-      if(c==="Təbii Şirələr") continue;
-      content.innerHTML+=`
-      <div class="category-section">
-        <div class="category-title">${c}</div>
-        <div class="products">
-          ${data[c].map(productCard).join("")}
-        </div>
-      </div>`;
+        if(Array.isArray(data[c])){
+            // Sadə array-lər
+            content.innerHTML+=`
+            <div class="category-section">
+                <div class="category-title">${c}</div>
+                <div class="products">
+                    ${data[c].map(productCard).join("")}
+                </div>
+            </div>`;
+        } else if(typeof data[c] === "object") {
+            // Object-lər (Təbii Şirələr kimi)
+            for(const sub in data[c]){
+                content.innerHTML+=`
+                <div class="category-section">
+                    <div class="category-title">${sub}</div>
+                    <div class="products">
+                        ${data[c][sub].map(productCard).join("")}
+                    </div>
+                </div>`;
+            }
+        }
     }
-  }else{
+}
+ else {
     if(!data[cat]) return;
     content.innerHTML=`<div class="category-section"><div class="products">${data[cat].map(productCard).join("")}</div></div>`;
   }
